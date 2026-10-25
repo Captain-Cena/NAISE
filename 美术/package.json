@@ -1,0 +1,11 @@
+{
+  "name": "svg-workflow",
+  "private": true,
+  "description": "Minimal SVG render and cleanup workflow",
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@resvg/resvg-js": "2.6.2"
+  }
+}

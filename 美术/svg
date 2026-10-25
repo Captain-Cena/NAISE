@@ -1,0 +1,62 @@
+#!/usr/bin/env node
+'use strict';
+
+const fs = require('node:fs');
+const path = require('node:path');
+const { createHash } = require('node:crypto');
+
+const temp = path.join(__dirname, '.tmp');
+const [command, ...args] = process.argv.slice(2);
+const usage = '用法：\n  ./svg render 文件.svg [--width 像素]\n  ./svg clean\n  ./svg help';
+
+function checkTemp() {
+  try {
+    const stat = fs.lstatSync(temp);
+    if (stat.isSymbolicLink() || !stat.isDirectory()) {
+      throw new Error('.tmp 必须是项目内的普通目录，不能是符号链接或文件。');
+    }
+  } catch (error) {
+    if (error.code !== 'ENOENT') throw error;
+  }
+}
+
+try {
+  if (command === 'clean' && args.length === 0) {
+    checkTemp();
+    fs.rmSync(temp, { recursive: true, force: true });
+    console.log('已清理项目 .tmp/ 中的全部临时文件。');
+  } else if (command === 'render') {
+    if (!(args.length === 1 || (args.length === 3 && args[1] === '--width'))) {
+      throw new Error(usage);
+    }
+    const width = args.length === 3 ? Number(args[2]) : undefined;
+    if (width !== undefined && (!Number.isSafeInteger(width) || width <= 0)) {
+      throw new Error('--width 必须是正整数。');
+    }
+    const source = fs.realpathSync(path.resolve(args[0]));
+    if (path.extname(source).toLowerCase() !== '.svg') {
+      throw new Error('输入文件必须是 SVG。');
+    }
+    checkTemp();
+    const { Resvg } = require('@resvg/resvg-js');
+    const options = { font: { loadSystemFonts: true } };
+    if (width !== undefined) options.fitTo = { mode: 'width', value: width };
+    const png = new Resvg(fs.readFileSync(source), options).render().asPng();
+    fs.mkdirSync(temp, { recursive: true });
+    const key = createHash('sha256').update(source).digest('hex').slice(0, 16);
+    const output = path.join(temp, `${path.basename(source, path.extname(source))}-${key}.png`);
+    // 先写临时文件再替换；同一 SVG 只保留最新预览。
+    const pending = `${output}.${process.pid}.tmp`;
+    fs.writeFileSync(pending, png, { flag: 'wx' });
+    fs.renameSync(pending, output);
+    console.log(output);
+  } else if ((!command || command === 'help' || command === '--help') && args.length === 0) {
+    console.log(usage);
+  } else {
+    throw new Error(usage);
+  }
+} catch (error) {
+  console.error(`错误：${error.message}`);
+  if (error.code === 'MODULE_NOT_FOUND') console.error('请先在项目目录执行 npm ci。');
+  process.exitCode = 1;
+}
