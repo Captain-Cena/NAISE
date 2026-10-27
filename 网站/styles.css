@@ -1,0 +1,141 @@
+:root {
+  color-scheme: light;
+  --yellow: #ffe600;
+  --green: #008f50;
+  --ink: #101711;
+  --muted: #58605b;
+  --page-width: 1320px;
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+  color: var(--ink);
+  background: #fff;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; }
+img { display: block; max-width: 100%; height: auto; }
+a { color: inherit; text-decoration: none; -webkit-tap-highlight-color: transparent; }
+button { font: inherit; }
+p, h1, h2 { margin: 0; }
+a:focus-visible, button:focus-visible { outline: 3px solid #075c39; outline-offset: 5px; }
+.container { width: min(var(--page-width), calc(100% - 80px)); margin-inline: auto; }
+
+.site-header { background: var(--yellow); }
+.header-inner { display: flex; align-items: center; justify-content: space-between; gap: 32px; padding-block: 10px; }
+.brand { display: block; width: min(48%, 520px); flex-shrink: 0; }
+.brand img { width: 100%; }
+.site-nav { display: flex; align-items: center; gap: clamp(24px, 3vw, 46px); }
+.site-nav a { padding-block: 13px; font-size: 17px; font-weight: 600; white-space: nowrap; text-underline-offset: 7px; }
+.site-nav a:hover, .site-nav a[aria-current="page"] { text-decoration: underline; text-decoration-thickness: 2px; }
+.menu-toggle { display: none; }
+
+.hero { background: linear-gradient(110deg, #effaf6 0%, #f7fcfa 42%, #fff 76%); }
+.hero-inner { display: grid; grid-template-columns: 0.9fr 1.1fr; align-items: center; gap: 16px; padding-block: 42px 38px; }
+.hero-copy { position: relative; z-index: 1; min-width: 0; }
+.eyebrow, .academy-abbreviation, .motto { font-family: Georgia, "Times New Roman", serif; }
+.eyebrow { font-size: 14px; letter-spacing: 0.23em; margin-bottom: 16px; }
+h1 { font-size: clamp(29px, 3.4vw, 48px); line-height: 1.3; font-weight: 850; letter-spacing: -0.025em; white-space: nowrap; }
+.academy-abbreviation { margin-top: 7px; font-size: 19px; letter-spacing: 0.17em; }
+.introduction { margin-top: 26px; font-size: clamp(19px, 1.8vw, 26px); line-height: 1.7; letter-spacing: 0.03em; }
+.motto { width: fit-content; margin-block: 22px 25px; padding-top: 18px; border-top: 1px solid #c8d7cf; font-size: 12px; letter-spacing: 0.22em; }
+.primary-link { display: inline-flex; align-items: center; gap: 15px; padding: 13px 25px; border-radius: 100px; background: var(--green); color: #fff; font-size: 21px; line-height: 1.35; font-weight: 700; transition: background 160ms ease, transform 160ms ease; }
+.primary-link span { font-size: 26px; font-weight: 400; line-height: 1; }
+.primary-link:hover { background: #007b44; transform: translateY(-2px); }
+.hero-art { min-width: 0; mix-blend-mode: multiply; }
+.hero-art img {
+  width: 100%;
+  /* 只淡化素材边缘的空白，让白底融入浅色容器；角色和道具保持完整。 */
+  mask-image: linear-gradient(90deg, transparent, #000 2%, #000 98%, transparent), linear-gradient(0deg, transparent, #000 4%, #000 96%, transparent);
+  mask-composite: intersect;
+}
+
+.entry-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; padding-block: 28px 0; }
+.entry-card { position: relative; min-width: 0; display: grid; grid-template-columns: 42% 1fr; align-items: center; gap: 6px; padding: 20px 30px 20px 10px; border-radius: 16px; border: 1px solid transparent; transition: border-color 160ms ease, transform 160ms ease; }
+.entry-card.mint { background: #edf9f4; }
+.entry-card.cream { background: #fcf7ed; }
+.entry-card.gray { background: #f2f3f4; }
+.entry-card:hover { border-color: #9ebca9; transform: translateY(-3px); }
+.entry-image { width: 100%; object-fit: contain; }
+.entry-copy { min-width: 0; }
+.entry-copy h2 { font-size: clamp(16px, 1.4vw, 20px); font-weight: 750; line-height: 1.55; }
+.entry-copy p { margin-top: 7px; color: var(--muted); font-size: 14px; line-height: 1.6; }
+.entry-arrow { position: absolute; top: 14px; right: 15px; font-size: 25px; line-height: 1; }
+
+.site-footer { display: flex; align-items: center; justify-content: center; gap: 22px; padding-block: 32px; }
+.footer-line { height: 1px; background: #d5dcd7; flex: 1; }
+.site-footer img { width: 46px; height: 46px; border-radius: 50%; }
+.site-footer p { font-family: Georgia, "Times New Roman", serif; font-size: 10px; letter-spacing: 0.16em; white-space: nowrap; }
+
+.placeholder { min-height: calc(100svh - 135px); display: grid; place-items: center; padding: 36px 24px 52px; }
+.placeholder-content { text-align: center; }
+.placeholder-content img { width: min(420px, 70vw, 56svh); margin-inline: auto; }
+.placeholder-content p { margin-top: 22px; font-size: 25px; font-weight: 600; letter-spacing: 0.08em; }
+
+@media (max-width: 1050px) {
+  .container { width: calc(100% - 48px); }
+  .header-inner { gap: 20px; }
+  .site-nav { gap: 24px; }
+  .site-nav a { font-size: 16px; }
+  .hero-inner { grid-template-columns: 1fr 1.12fr; gap: 0; padding-block: 36px; }
+  h1 { font-size: clamp(27px, 3.4vw, 35px); }
+  .eyebrow { margin-bottom: 12px; }
+  .introduction { margin-top: 20px; font-size: 19px; }
+  .entry-grid { gap: 14px; }
+  .entry-card { grid-template-columns: 38% 1fr; padding: 26px 22px 20px 8px; }
+  .entry-copy h2 { font-size: 16px; }
+  .entry-copy p { font-size: 12px; }
+  .entry-arrow { font-size: 22px; right: 10px; top: 10px; }
+}
+
+@media (max-width: 760px) {
+  .container { width: calc(100% - 40px); }
+  .header-inner { flex-wrap: wrap; gap: 0; padding-block: 10px; }
+  .brand { width: min(290px, calc(100% - 52px)); }
+  .menu-toggle:not([hidden]) { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 5px; width: 44px; height: 44px; border: 0; padding: 10px; background: transparent; cursor: pointer; border-radius: 6px; }
+  .menu-toggle span { width: 23px; height: 2px; background: var(--ink); transition: transform 160ms ease, opacity 160ms ease; }
+  .menu-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .menu-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+  .menu-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  .site-nav { flex-basis: 100%; justify-content: space-between; gap: 14px; margin-top: 10px; padding-top: 8px; border-top: 1px solid #c7b600; }
+  .js .site-nav:not([data-open]) { display: none; }
+  .site-nav a { font-size: 15px; padding: 10px 3px; }
+  .hero-inner { grid-template-columns: 1fr; gap: 12px; padding-block: 28px 0; }
+  .hero-copy { padding-inline: 3px; }
+  .eyebrow { font-size: 12px; letter-spacing: 0.2em; margin-bottom: 10px; }
+  h1 { font-size: clamp(26px, 8.7vw, 41px); letter-spacing: -0.035em; }
+  .academy-abbreviation { margin-top: 3px; font-size: 16px; }
+  .introduction { margin-top: 16px; font-size: 19px; line-height: 1.6; letter-spacing: 0; }
+  .motto { margin-block: 15px 17px; padding-top: 13px; font-size: 10px; letter-spacing: 0.19em; }
+  .primary-link { padding: 11px 22px; font-size: 17px; gap: 12px; }
+  .primary-link span { font-size: 23px; }
+  .hero-art { width: 100%; max-width: 590px; justify-self: center; }
+  .entry-grid { grid-template-columns: 1fr; gap: 12px; padding-top: 20px; }
+  .entry-card { grid-template-columns: 37% 1fr; gap: 13px; padding: 8px 35px 8px 8px; border-radius: 13px; }
+  .entry-image { width: 100%; max-width: 145px; justify-self: center; }
+  .entry-copy h2 { font-size: 17px; line-height: 1.45; }
+  .entry-copy p { font-size: 13px; margin-top: 6px; }
+  .entry-arrow { top: 17px; right: 13px; font-size: 22px; }
+  .site-footer { gap: 12px; padding-block: 25px; }
+  .site-footer img { width: 37px; height: 37px; }
+  .site-footer p { font-size: 9.5px; letter-spacing: 0.06em; }
+  .site-footer .footer-line { min-width: 0; }
+  .placeholder { min-height: calc(100svh - 84px); padding: 30px 20px 48px; }
+  .placeholder-content img { width: min(360px, 78vw, 55svh); }
+  .placeholder-content p { font-size: 22px; margin-top: 20px; }
+}
+
+@media (max-width: 360px) {
+  .container { width: calc(100% - 28px); }
+  .introduction { font-size: 17px; }
+  .entry-card { gap: 8px; padding-right: 28px; }
+  .entry-copy h2 { font-size: 15px; }
+  .entry-copy p { font-size: 12px; }
+  .site-footer { gap: 8px; }
+  .site-footer p { font-size: 8.5px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; }
+}
