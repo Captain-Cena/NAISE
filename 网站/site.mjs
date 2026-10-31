@@ -1,3 +1,4 @@
+import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 
 export const siteDirectory = fileURLToPath(new URL('.', import.meta.url));
@@ -9,6 +10,7 @@ export const assets = {
   'research.png': new URL('../美术/交付/网站主页/科研成果图标.png', import.meta.url),
   'news.png': new URL('../美术/交付/网站主页/新闻速递图标.png', import.meta.url),
   'placeholder.png': new URL('../美术/交付/网站主页/捧腹大笑占位图.png', import.meta.url),
+  'auster-dovah.png': new URL('../美术/交付/成员介绍/auster-dovah.png', import.meta.url),
 };
 
 const sections = [
@@ -17,7 +19,59 @@ const sections = [
   { route: '/news', label: '新闻速递', title: '新闻速递', description: '关注团队动态', image: 'news.png', theme: 'gray' },
 ];
 
-export const routes = ['/', ...sections.map(({ route }) => route)];
+const members = JSON.parse(readFileSync(new URL('./members.json', import.meta.url), 'utf8'));
+const profileTemplate = readFileSync(new URL('./member-profile.html', import.meta.url), 'utf8');
+export const routes = ['/', ...sections.map(({ route }) => route), ...members.map(({ id }) => `/members/${id}`)];
+
+function text(value) {
+  return String(value ?? '-').replace(/[&<>"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char]);
+}
+
+function profile(member) {
+  return profileTemplate.replace(/\{\{(\w+)\}\}/g, (_, field) => text(member[field]));
+}
+
+function memberDirectory() {
+  const themes = ['mint', 'cream', 'blue', 'sand', 'sage'];
+  return `<main id="main-content">
+    <section class="members-banner" aria-labelledby="members-title">
+      <div class="members-banner-inner container">
+        <div class="members-banner-copy">
+          <p class="members-kicker">NAISE · OUR PEOPLE</p>
+          <h1 id="members-title">成员介绍</h1>
+          <p>不同的专业，同一份好奇心。</p>
+        </div>
+        <img class="members-banner-art" src="/assets/members.png" alt="五只奶蛙组成的团队群像" width="1254" height="1254">
+      </div>
+    </section>
+    <div class="members-breadcrumb container"><a href="/">首页</a><span aria-hidden="true">›</span>成员介绍</div>
+    <section class="members-directory container" aria-labelledby="members-directory-title">
+      <div class="members-intro">
+        <p class="members-kicker">MEET THE TEAM</p>
+        <h2 id="members-directory-title">认识 NAISE 的成员</h2>
+        <p>向下浏览，逐个认识五位成员。</p>
+      </div>
+      <div class="members-stream">
+        ${members.map((member, index) => `<a class="member-entry" href="/members/${text(member.id)}" data-reveal aria-label="查看 ${text(member.name ?? `第 ${index + 1} 位成员`)} 的成员介绍">
+          <span class="member-portrait ${themes[index]}${member.id === 'member-4' ? ' auster' : ''}"><img src="/assets/${text(member.portrait ?? 'placeholder.png')}" alt="${member.name ? `${text(member.name)} 的奶蛙个人照` : '奶蛙示意头像'}" width="${text(member.portraitWidth ?? 1254)}" height="${text(member.portraitHeight ?? 1254)}" loading="lazy"></span>
+          <span class="member-copy">
+            <span class="member-role">${text(member.department)}</span>
+            <span class="member-name">${text(member.name)}</span>
+            <span class="member-rule" aria-hidden="true"></span>
+            <span class="member-description">${text(member.introduction)}</span>
+            <span class="member-link">查看成员介绍 ↗</span>
+          </span>
+        </a>`).join('\n        ')}
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer container">
+    <span class="footer-line" aria-hidden="true"></span>
+    <img src="/assets/crest.svg" alt="NAISE 院徽" width="1254" height="1254">
+    <p>NAISE · IN ABSTRACTION WE TRUST</p>
+    <span class="footer-line" aria-hidden="true"></span>
+  </footer>`;
+}
 
 function navigation(currentPath) {
   return `<header class="site-header">
@@ -83,8 +137,9 @@ function placeholder() {
 export function renderPage(pathname) {
   const route = pathname === '/' ? '/' : pathname.replace(/\/$/, '');
   if (!routes.includes(route)) return null;
-  const section = sections.find((entry) => entry.route === route);
-  const title = section ? `${section.label} · NAISE` : 'NAISE · 奶蛙科学与工程院';
+  const member = members.find(({ id }) => route === `/members/${id}`);
+  const section = sections.find((entry) => entry.route === (member ? '/members' : route));
+  const title = member?.name ? `${member.name} · NAISE` : section ? `${section.label} · NAISE` : 'NAISE · 奶蛙科学与工程院';
   return `<!doctype html>
 <html lang="zh-CN">
 <head>
@@ -92,14 +147,15 @@ export function renderPage(pathname) {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#ffe600">
   <meta name="description" content="NAISE 奶蛙科学与工程院，五人跨学科研究团队。在这里，分享思考与研究。">
-  <title>${title}</title>
+  <title>${text(title)}</title>
   <link rel="icon" type="image/svg+xml" href="/assets/crest.svg">
   <link rel="stylesheet" href="/styles.css">
   <script src="/menu.js" defer></script>
+  ${route === '/members' ? '<script src="/members-scroll.js" defer></script>' : ''}
 </head>
 <body>
-  ${navigation(route)}
-  ${section ? placeholder() : homepage()}
+  ${navigation(member ? '/members' : route)}
+  ${route === '/members' ? memberDirectory() : member?.name ? profile(member) : section ? placeholder() : homepage()}
 </body>
 </html>\n`;
 }

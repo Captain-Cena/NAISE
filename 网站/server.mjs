@@ -26,7 +26,7 @@ export function createSiteServer({ productionRoot } = {}) {
         type = 'text/html; charset=utf-8';
       } else {
         let source;
-        if (pathname === '/styles.css' || pathname === '/menu.js') {
+        if (['/styles.css', '/menu.js', '/members-scroll.js'].includes(pathname)) {
           source = path.join(productionRoot || siteDirectory, pathname.slice(1));
         } else if (pathname.startsWith('/assets/') && Object.hasOwn(assets, pathname.slice(8))) {
           source = productionRoot ? path.join(productionRoot, pathname.slice(1)) : assets[pathname.slice(8)];
