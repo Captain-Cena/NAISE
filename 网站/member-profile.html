@@ -1,0 +1,75 @@
+<main id="main-content" class="profile-page">
+  <div class="profile-breadcrumb container"><a href="/">首页</a><span aria-hidden="true">›</span><a href="/members">成员介绍</a><span aria-hidden="true">›</span>{{name}}</div>
+  <div class="profile-heading container">
+    <div>
+      <p class="profile-kicker">NAISE · OUR PEOPLE</p>
+      <h1>{{name}}</h1>
+      <p>{{department}}</p>
+    </div>
+    <span class="profile-heading-mark" aria-hidden="true">NAISE</span>
+  </div>
+  <div class="profile-layout container">
+    <aside class="profile-aside" aria-label="成员资料">
+      <div class="profile-photo-frame"><img src="/assets/{{portrait}}" alt="{{name}} 的照片" width="{{portraitWidth}}" height="{{portraitHeight}}"></div>
+      <div class="profile-identity">
+        <h2>{{name}}</h2>
+      </div>
+      <div class="profile-contact">
+        <h2>联系方式</h2>
+        <div><span>邮箱</span><span>{{email}}</span></div>
+      </div>
+    </aside>
+    <div class="profile-sections">
+      <section class="profile-panel" aria-labelledby="profile-basic">
+        <div class="profile-ribbon">
+          <span class="profile-ribbon-frog-wrap"><img class="profile-ribbon-frog" src="/assets/placeholder.png" alt="" width="1254" height="1254"></span>
+          <h2 id="profile-basic" class="profile-ribbon-label">
+            <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="16" cy="10" r="4"/><path d="M7 26v-2a9 9 0 0 1 18 0v2H7Z"/><path d="M3 7V5a2 2 0 0 1 2-2h3M24 3h3a2 2 0 0 1 2 2v2M3 25v2a2 2 0 0 0 2 2h3M24 29h3a2 2 0 0 0 2-2v-2"/></svg>
+            <span>基本信息</span>
+          </h2>
+          <span class="profile-ribbon-line" aria-hidden="true"></span>
+        </div>
+        <div class="profile-panel-body"><p>姓名：{{name}}</p><p>部门：{{department}}</p><p>{{introduction}}</p></div>
+      </section>
+      <section class="profile-panel" aria-labelledby="profile-work">
+        <div class="profile-ribbon">
+          <span class="profile-ribbon-frog-wrap"><img class="profile-ribbon-frog" src="/assets/placeholder.png" alt="" width="1254" height="1254" loading="lazy"></span>
+          <h2 id="profile-work" class="profile-ribbon-label">
+            <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10" width="24" height="18" rx="2"/><path d="M11 10V7a3 3 0 0 1 3-3h4a3 3 0 0 1 3 3v3M4 17c7 5 17 5 24 0M14 19h4v4h-4z"/></svg>
+            <span>工作履历</span>
+          </h2>
+          <span class="profile-ribbon-line" aria-hidden="true"></span>
+        </div>
+        <div class="profile-panel-body profile-empty">{{workHistory}}</div>
+      </section>
+      <section class="profile-panel" aria-labelledby="profile-research">
+        <div class="profile-ribbon">
+          <span class="profile-ribbon-frog-wrap"><img class="profile-ribbon-frog" src="/assets/placeholder.png" alt="" width="1254" height="1254" loading="lazy"></span>
+          <h2 id="profile-research" class="profile-ribbon-label">
+            <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="10" y="10" width="12" height="12" rx="2"/><path d="M14 14h4v4h-4zM13 3v7M19 3v7M13 22v7M19 22v7M3 13h7M3 19h7M22 13h7M22 19h7"/></svg>
+            <span>研究领域</span>
+          </h2>
+          <span class="profile-ribbon-line" aria-hidden="true"></span>
+        </div>
+        <div class="profile-panel-body profile-empty">{{research}}</div>
+      </section>
+      <section class="profile-panel" aria-labelledby="profile-results">
+        <div class="profile-ribbon">
+          <span class="profile-ribbon-frog-wrap"><img class="profile-ribbon-frog" src="/assets/placeholder.png" alt="" width="1254" height="1254" loading="lazy"></span>
+          <h2 id="profile-results" class="profile-ribbon-label">
+            <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3h11l5 5v20H8a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z"/><path d="M19 3v6h5M11 15h9M11 19h9M11 23h6"/></svg>
+            <span>学术成果</span>
+          </h2>
+          <span class="profile-ribbon-line" aria-hidden="true"></span>
+        </div>
+        <div class="profile-panel-body profile-empty">{{achievements}}</div>
+      </section>
+    </div>
+  </div>
+</main>
+<footer class="site-footer container">
+  <span class="footer-line" aria-hidden="true"></span>
+  <img src="/assets/crest.svg" alt="NAISE 院徽" width="1254" height="1254">
+  <p>NAISE · IN ABSTRACTION WE TRUST</p>
+  <span class="footer-line" aria-hidden="true"></span>
+</footer>

@@ -1,0 +1,19 @@
+[
+  { "id": "member-1", "name": null, "department": null, "portrait": null },
+  { "id": "member-2", "name": null, "department": null, "portrait": null },
+  { "id": "member-3", "name": null, "department": null, "portrait": null },
+  {
+    "id": "member-4",
+    "name": "Auster Dovah",
+    "department": "奶蛙金融与投资处",
+    "portrait": "auster-dovah.png",
+    "portraitWidth": 1086,
+    "portraitHeight": 1448,
+    "introduction": null,
+    "email": null,
+    "workHistory": null,
+    "research": null,
+    "achievements": null
+  },
+  { "id": "member-5", "name": null, "department": null, "portrait": null }
+]

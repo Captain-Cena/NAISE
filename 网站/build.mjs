@@ -10,7 +10,7 @@ export async function buildSite(output = path.join(siteDirectory, 'dist')) {
     await mkdir(directory, { recursive: true });
     await writeFile(path.join(directory, 'index.html'), renderPage(route));
   }
-  for (const filename of ['styles.css', 'menu.js']) {
+  for (const filename of ['styles.css', 'menu.js', 'members-scroll.js']) {
     await copyFile(path.join(siteDirectory, filename), path.join(output, filename));
   }
   for (const [name, source] of Object.entries(assets)) {

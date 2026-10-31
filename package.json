@@ -10,6 +10,6 @@
     "build": "node 网站/build.mjs",
     "preview": "node 网站/server.mjs --preview",
     "test": "node --test 网站/site.test.mjs",
-    "check": "node --check 网站/site.mjs && node --check 网站/server.mjs && node --check 网站/build.mjs && node --check 网站/menu.js && npm test"
+    "check": "node --check 网站/site.mjs && node --check 网站/server.mjs && node --check 网站/build.mjs && node --check 网站/menu.js && node --check 网站/members-scroll.js && npm test"
   }
 }
